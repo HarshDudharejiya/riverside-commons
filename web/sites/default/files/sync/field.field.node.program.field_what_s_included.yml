@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  config: [field.storage.node.field_what_s_included, node.type.program]
+  module: [text]
+id: node.program.field_what_s_included
+field_name: field_what_s_included
+entity_type: node
+bundle: program
+label: "What's included"
+description: 'Author as a bulleted list in the WYSIWYG. Optional.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: text_long

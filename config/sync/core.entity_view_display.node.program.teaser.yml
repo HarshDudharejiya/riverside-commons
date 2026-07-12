@@ -1,0 +1,65 @@
+uuid: c0ace436-a5e4-4285-b482-64fa8aea337a
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.program.field_body
+    - field.field.node.program.field_category
+    - field.field.node.program.field_class_size
+    - field.field.node.program.field_dates
+    - field.field.node.program.field_image
+    - field.field.node.program.field_included
+    - field.field.node.program.field_instructor
+    - field.field.node.program.field_learn
+    - field.field.node.program.field_level
+    - field.field.node.program.field_location
+    - field.field.node.program.field_member_price
+    - field.field.node.program.field_price
+    - field.field.node.program.field_schedule
+    - field.field.node.program.field_sessions
+    - field.field.node.program.field_subtitle
+    - image.style.program_card_thumb
+    - node.type.program
+  module:
+    - image
+    - user
+id: node.program.teaser
+targetEntityType: node
+bundle: program
+mode: teaser
+content:
+  field_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: program_card_thumb
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  body: true
+  field_body: true
+  field_category: true
+  field_class_size: true
+  field_date_range: true
+  field_dates: true
+  field_included: true
+  field_instructor: true
+  field_instructor_details: true
+  field_learn: true
+  field_level: true
+  field_location: true
+  field_member_price: true
+  field_member_price_note: true
+  field_price: true
+  field_price_member: true
+  field_price_standard: true
+  field_schedule: true
+  field_sessions: true
+  field_subtitle: true
+  field_subtitle_intro: true
+  field_what_s_included: true
+  field_what_you_ll_learn: true
+  links: true

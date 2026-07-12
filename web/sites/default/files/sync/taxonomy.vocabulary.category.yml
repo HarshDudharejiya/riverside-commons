@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {}
+name: Category
+vid: category
+description: 'Program categories (e.g. Ceramics, Music, Youth).'
+weight: 0
+new_revision: false

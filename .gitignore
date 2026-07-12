@@ -1,0 +1,25 @@
+# IDEs
+.idea/
+.vscode/
+*.swp
+
+# Composer
+/vendor/
+
+# Drupal - Ignore core and contributed extensions (managed by Composer)
+web/core/
+web/modules/contrib/
+web/themes/contrib/
+web/profiles/contrib/
+web/libraries/
+
+# Drupal - Ignore user-uploaded files and local overrides
+web/sites/*/private/
+web/sites/*/settings.local.php
+web/sites/*/services.local.yml
+
+# Environment variables
+.env
+
+# Theme build files (if you used npm/yarn in your custom theme)
+node_modules/

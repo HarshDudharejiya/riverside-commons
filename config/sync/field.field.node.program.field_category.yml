@@ -1,0 +1,29 @@
+uuid: d17e4fca-df3b-43e8-bb27-db361890084f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category
+    - node.type.program
+    - taxonomy.vocabulary.program_category
+id: node.program.field_category
+field_name: field_category
+entity_type: node
+bundle: program
+label: Category
+description: 'Used for the listing page exposed filter.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      program_category: program_category
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

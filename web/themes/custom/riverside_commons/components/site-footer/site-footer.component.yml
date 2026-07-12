@@ -1,0 +1,41 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/modules/sdc/src/metadata.schema.json
+name: Site footer
+status: stable
+description: 'Four-column dark footer: org info, Programs, About, Get Involved, plus a bottom bar with copyright and social links.'
+props:
+  type: object
+  required:
+    - org
+    - columns
+  properties:
+    org:
+      type: object
+      title: 'Org name/address block'
+      properties:
+        name: { type: string }
+        address_lines:
+          type: array
+          items: { type: string }
+    columns:
+      type: array
+      title: 'Nav columns (Programs / About / Get Involved)'
+      items:
+        type: object
+        properties:
+          heading: { type: string }
+          links:
+            type: array
+            items:
+              type: object
+              properties:
+                text: { type: string }
+                url: { type: string }
+    social_links:
+      type: array
+      items:
+        type: object
+        properties:
+          text: { type: string }
+          url: { type: string }
+    copyright:
+      type: string

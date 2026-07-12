@@ -1,0 +1,11 @@
+uuid: feea8cae-5bbe-46e5-b0c8-058c87dde829
+langcode: en
+status: true
+dependencies: {  }
+name: Program
+type: program
+description: 'A Riverside Commons arts program (class/workshop/event).'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: false

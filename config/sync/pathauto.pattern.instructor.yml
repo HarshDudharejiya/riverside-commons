@@ -1,0 +1,23 @@
+uuid: 08f715a7-517e-4621-88e5-87dbab189834
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.instructor
+  module:
+    - node
+id: instructor
+label: Instructor
+type: 'canonical_entities:node'
+pattern: '/[node:title]'
+selection_criteria:
+  f37110eb-e179-4679-ab5b-c6181adc402e:
+    id: 'entity_bundle:node'
+    negate: false
+    context_mapping:
+      node: node
+    bundles:
+      instructor: instructor
+selection_logic: and
+weight: -5
+relationships: {  }

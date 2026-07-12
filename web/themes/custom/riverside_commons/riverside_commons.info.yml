@@ -1,0 +1,14 @@
+name: Riverside Commons
+type: theme
+description: 'Frontend theme for the Riverside Commons Drupal assignment.'
+core_version_requirement: ^10 || ^11
+base theme: false
+libraries:
+  - riverside_commons/global
+regions:
+  header: Header
+  content: Content
+  footer: Footer
+components:
+  namespaces:
+    riverside_commons: components

@@ -1,0 +1,27 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/modules/sdc/src/metadata.schema.json
+name: Site nav
+status: stable
+description: 'Header navigation with a disclosure-pattern mobile menu toggle.'
+props:
+  type: object
+  required:
+    - links
+  properties:
+    links:
+      type: array
+      title: 'Menu links'
+      items:
+        type: object
+        properties:
+          text: { type: string }
+          url: { type: string }
+    donate_url:
+      type: string
+      title: 'Donate CTA target (rendered as a distinct button, not a menu item)'
+    donate_text:
+      type: string
+      default: Donate
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

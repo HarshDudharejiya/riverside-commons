@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  config: [field.storage.node.field_what_you_ll_learn, node.type.program]
+id: node.program.field_what_you_ll_learn
+field_name: field_what_you_ll_learn
+entity_type: node
+bundle: program
+label: "What you'll learn"
+description: 'Plain long text (no text format) - author one item per line; preprocess/twig splits on newlines into a bulleted list. Optional.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: string_long

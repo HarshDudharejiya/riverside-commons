@@ -1,0 +1,9 @@
+uuid: e225bd68-787d-4f4a-8e25-de39bcf3d2af
+langcode: en
+status: true
+dependencies: {  }
+name: Category
+vid: category
+description: 'Program categories (e.g. Ceramics, Music, Youth).'
+weight: 0
+new_revision: false

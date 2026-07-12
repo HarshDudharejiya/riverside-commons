@@ -1,0 +1,12 @@
+global:
+  css:
+    theme:
+      css/base.css: {}
+      css/program-detail.css: {}
+      css/components.css: {}
+
+# The program-card, site-nav, and site-footer SDCs each auto-register
+# their own scoped CSS/JS: a file named exactly like the component
+# (e.g. components/program-card/program-card.css) is picked up
+# automatically by the SDC module — no manual library entry needed,
+# and it's only loaded on pages where that component actually renders.

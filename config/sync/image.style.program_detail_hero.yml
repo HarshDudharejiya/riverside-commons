@@ -1,0 +1,15 @@
+uuid: d0742df6-53ec-45fe-853b-9aece0522ea3
+langcode: en
+status: true
+dependencies: {  }
+name: program_detail_hero
+label: 'Program detail hero'
+effects:
+  b1b2c3d4-0000-0000-0000-000000000001:
+    uuid: b1b2c3d4-0000-0000-0000-000000000001
+    id: image_scale
+    weight: 1
+    data:
+      width: 1200
+      height: null
+      upscale: false

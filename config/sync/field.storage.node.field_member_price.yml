@@ -1,0 +1,20 @@
+uuid: 9df696d7-bdce-49c7-b2aa-3cccb830af94
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_member_price
+field_name: field_member_price
+entity_type: node
+type: decimal
+settings:
+  precision: 10
+  scale: 2
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

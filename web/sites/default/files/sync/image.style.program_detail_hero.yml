@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies: {}
+name: program_detail_hero
+label: 'Program detail hero'
+effects:
+  b1b2c3d4-0000-0000-0000-000000000001:
+    id: image_scale
+    data:
+      width: 1200
+      height: null
+      upscale: false
+    weight: 1
+    uuid: b1b2c3d4-0000-0000-0000-000000000001
+
+# This is the LCP candidate on the detail page — served via a
+# responsive_image style in production (see README perf notes) rather
+# than a single fixed style; kept here as the base derivative.

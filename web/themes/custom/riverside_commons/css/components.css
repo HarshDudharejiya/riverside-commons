@@ -1,0 +1,399 @@
+/* --- Detail Page Layout --- */
+.program-detail__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+@media (min-width: 900px) {
+  .program-detail__container {
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+}
+
+.program-title {
+  font-size: 2.5rem;
+  margin: 0 0 0.5rem;
+  color: #1a1a1a;
+}
+.program-subtitle {
+  font-size: 1.125rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+.program-hero-image img {
+  width: 100%;
+  border-radius: 8px;
+  height: auto;
+}
+
+/* --- Dynamic Lists --- */
+.program-body__list ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 2rem;
+}
+.program-body__list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #444;
+}
+.program-body__list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #888;
+  font-size: 1.2rem;
+}
+
+/* --- Instructor Block --- */
+.instructor-profile {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+.instructor-profile__image img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.instructor-profile__details h4 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+.instructor-profile__title {
+  display: block;
+  font-size: 0.875rem;
+  color: #777;
+  margin-bottom: 0.5rem;
+}
+.instructor-profile__bio {
+  font-size: 0.875rem;
+  color: #444;
+}
+
+/* --- Sticky Sidebar --- */
+.sticky-sidebar {
+  position: sticky;
+  top: 100px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background: #fff;
+}
+.price-header {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
+}
+.price-main {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+.price-member {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.program-specs {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  row-gap: 0.75rem;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+.program-specs dt {
+  color: #666;
+  margin: 0;
+}
+.program-specs dd {
+  text-align: right;
+  font-weight: 500;
+  margin: 0;
+  text-transform: capitalize;
+}
+.btn {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: opacity 0.2s ease;
+  text-decoration: none;
+}
+.btn:hover {
+  opacity: 0.8;
+}
+.btn--primary {
+  background: #1a1a1a;
+  color: #fff;
+  border: 1px solid #1a1a1a;
+  margin-bottom: 0.75rem;
+}
+.btn--secondary {
+  background: transparent;
+  color: #1a1a1a;
+  border: 1px solid #e0e0e0;
+}
+
+/* --- Views Grid Layout --- */
+.programs-listing-page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 0rem;
+}
+
+.programs-listing-page__content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .programs-listing-page__content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .programs-listing-page__content {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --- Header & Subtitle --- */
+.programs-listing-page__header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.programs-listing-page__subtitle {
+  font-size: 1.125rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+/* --- Results Summary --- */
+.programs-listing-page__summary {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+/* --- Exposed Filters (Styled as Pills) --- */
+.programs-listing-page__filters fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.programs-listing-page__filters legend {
+  display: none;
+}
+
+.programs-listing-page__filters .form-radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.programs-listing-page__filters .form-radios .form-item {
+  margin: 0;
+  padding: 0;
+}
+
+.programs-listing-page__filters input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.programs-listing-page__filters input[type="radio"] + label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 40px;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.programs-listing-page__filters
+  input[type="radio"]:not(:checked)
+  + label:hover {
+  border-color: #1a1a1a;
+}
+
+.programs-listing-page__filters input[type="radio"]:checked + label {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  border-color: #1a1a1a;
+}
+
+.programs-listing-page__filters .form-actions {
+  display: none;
+}
+
+.view-programs .views-exposed-form select {
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  border: 1px solid #1a1a1a;
+  background: #fff;
+}
+
+/* --- Pager (Pagination) --- */
+.pager__items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 3rem 0;
+}
+
+.pager__item {
+  display: inline-block;
+}
+
+.pager__item a,
+.pager__item-current {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  text-decoration: none;
+  color: #1a1a1a;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+}
+
+.pager__item--previous a,
+.pager__item--next a {
+  border-radius: 20px;
+  padding: 0 1rem;
+}
+
+.pager__item--current .pager__item-current {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+/* --- Bottom CTA Block --- */
+.programs-listing-page__cta {
+  background-color: #f8f6f5;
+  text-align: center;
+  padding: 4rem 2rem;
+  border-radius: 8px;
+  margin: 4rem 0;
+}
+
+.programs-listing-page__cta h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.programs-listing-page__cta p {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.programs-listing-page__cta .btn {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+}
+
+.program-hero-image > div > div:first-child {
+  display: none;
+}
+.program-hero-image img {
+  display: block;
+}
+
+.program-card:hover,
+.program-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08);
+}
+
+.program-card__image {
+  position: relative;
+  z-index: 1;
+}
+
+.program-card__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.program-card__content {
+  padding: 1.5rem;
+}
+
+.program-card__badge {
+  display: inline-block;
+  background-color: #fdf2ef;
+  color: #c44536;
+  padding: 0.25rem 0.6rem;
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+}
+
+.program-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.program-card__title a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.program-card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.program-card__title a:focus-visible {
+  outline: 3px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
+.program-card__meta {
+  margin: 0;
+  color: #555;
+  font-size: 0.875rem;
+}

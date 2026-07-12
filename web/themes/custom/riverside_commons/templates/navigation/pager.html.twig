@@ -1,0 +1,36 @@
+{% if items %}
+  <nav class="pager" aria-labelledby="{{ heading_id }}">
+    <ul class="pager__items">
+      
+      {# Previous Item #}
+      {% if items.previous %}
+        <li class="pager__item pager__item--previous">
+          <a href="{{ items.previous.href }}" title="{{ 'Go to previous page'|t }}" rel="prev">
+            <span aria-hidden="true">‹ Prev</span>
+          </a>
+        </li>
+      {% endif %}
+
+      {# Numbered Pages #}
+      {% for key, item in items.pages %}
+        <li class="pager__item {{ current == key ? 'pager__item--current' : '' }}">
+          {% if current == key %}
+            <span class="pager__item-current" aria-current="page">{{ key }}</span>
+          {% else %}
+            <a href="{{ item.href }}" title="{{ 'Go to page @key'|t({'@key': key}) }}">{{ key }}</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+
+      {# Next Item #}
+      {% if items.next %}
+        <li class="pager__item pager__item--next">
+          <a href="{{ items.next.href }}" title="{{ 'Go to next page'|t }}" rel="next">
+            <span aria-hidden="true">Next ›</span>
+          </a>
+        </li>
+      {% endif %}
+      
+    </ul>
+  </nav>
+{% endif %}

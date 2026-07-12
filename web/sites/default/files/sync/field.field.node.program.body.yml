@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.body
+    - node.type.program
+  module:
+    - text
+id: node.program.body
+field_name: body
+entity_type: node
+bundle: program
+label: 'About this program'
+description: ''
+required: true
+translatable: true
+default_value: []
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+field_type: text_with_summary
+
+# NOTE: this assumes field.storage.node.body already exists, which it
+# does on any site installed from the Standard profile (core creates
+# it automatically the first time any content type gets a body field
+# via the UI/`node_add_body_field()`). If you installed Minimal, either
+# add a body field via the UI once first (Drupal will create the
+# storage for you) or add a field.storage.node.body.yml alongside this.

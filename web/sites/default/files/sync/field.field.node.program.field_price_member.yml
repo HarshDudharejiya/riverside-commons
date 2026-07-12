@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_member
+    - node.type.program
+id: node.program.field_price_member
+field_name: field_price_member
+entity_type: node
+bundle: program
+label: 'Member price'
+description: 'Optional. Leave empty if there is no member discount for this program.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: '$'
+  suffix: ''
+field_type: decimal

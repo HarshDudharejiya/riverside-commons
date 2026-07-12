@@ -1,0 +1,22 @@
+uuid: 7fd61e3d-e903-4a4d-a3c8-5d77389b84e8
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - riverside_commons
+_core:
+  default_config_hash: eYL19CLDyinGTWYQfBD1DswWzglEotE_kHnHx3AxTXM
+id: riverside_commons_powered
+theme: riverside_commons
+region: header
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Powered by Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }

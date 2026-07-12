@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {}
+name: program_card_thumb
+label: 'Program card thumbnail'
+effects:
+  a1b2c3d4-0000-0000-0000-000000000001:
+    id: image_scale_and_crop
+    data:
+      width: 400
+      height: 300
+      anchor: 'center-center'
+    weight: 1
+    uuid: a1b2c3d4-0000-0000-0000-000000000001

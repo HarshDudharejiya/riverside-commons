@@ -1,0 +1,23 @@
+uuid: b52c38ab-2522-449c-a6aa-f36486bc0deb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_member_price
+    - node.type.program
+id: node.program.field_member_price
+field_name: field_member_price
+entity_type: node
+bundle: program
+label: 'Member Price'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: decimal

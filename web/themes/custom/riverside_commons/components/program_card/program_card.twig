@@ -1,0 +1,17 @@
+{{ attach_library('riverside_commons/global') }}
+<article class="program-card" aria-labelledby="{{ title|clean_id }}">
+  <div class="program-card__image">
+    {{ image }}
+  </div>
+  <div class="program-card__content">
+    {% if category %}
+      <span class="program-card__badge">{{ category }}</span>
+    {% endif %}
+    <h3 class="program-card__title" id="{{ title|clean_id }}">
+      <a href="{{ url }}">{{ title }}</a>
+    </h3>
+    {% if meta_text %}
+      <p class="program-card__meta">{{ meta_text }}</p>
+    {% endif %}
+  </div>
+</article>

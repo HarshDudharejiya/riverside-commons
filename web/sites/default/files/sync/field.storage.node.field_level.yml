@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  module: [node]
+id: node.field_level
+field_name: field_level
+entity_type: node
+type: list_string
+settings:
+  # ASSUMPTION - these allowed_values are a placeholder. This field
+  # ALREADY EXISTS on your real site as list_string; export your real
+  # values instead of trusting mine:
+  #   drush config:get field.storage.node.field_level --include-overridden
+  # and paste the real `allowed_values` block in here before importing,
+  # or this may silently overwrite your real option list.
+  # NOTE: allowed_values for list_string is a flat `key: label` map
+  # (not a list of {value,label} objects - that wrong shape is what
+  # caused the "offset of type string on string" fatal).
+  allowed_values:
+    beginner: Beginner
+    intermediate: Intermediate
+    all_levels: 'All levels'
+  allowed_values_function: ''
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {}
+persist_with_no_fields: false
+custom_storage: false

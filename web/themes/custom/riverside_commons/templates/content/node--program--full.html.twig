@@ -1,0 +1,84 @@
+<article class="program-detail" role="main">
+  <div class="program-detail__container">
+    
+    {# Main Content #}
+    <div class="program-detail__main">
+      {% if node.field_category.entity %}
+        <span class="program-badge">{{ node.field_category.entity.name.value }}</span>
+      {% endif %}
+      <h1 class="program-title">{{ label }}</h1>
+      {% if content.field_subtitle %}
+        <p class="program-subtitle">{{ content.field_subtitle }}</p>
+      {% endif %}
+      
+      <div class="program-hero-image">{{ content.field_image }}</div>
+
+      <div class="program-body">
+        <h2>About this class</h2>
+        <div class="program-body__text">{{ content.field_body }}</div>
+
+        {% if content.field_learn|render %}
+          <h3>What you’ll learn</h3>
+          <div class="program-body__list">{{ content.field_learn }}</div>
+        {% endif %}
+
+        {% if content.field_included|render %}
+          <h3>What’s included</h3>
+          <div class="program-body__list">{{ content.field_included }}</div>
+        {% endif %}
+
+        {% if node.field_instructor.entity %}
+          <h3>Your instructor</h3>
+          <div class="instructor-profile">
+            
+            <div class="instructor-profile__image">
+              {# Build the image tag manually using the referenced entity's URI #}
+              {% if node.field_instructor.entity.field_image.entity.uri.value %}
+                <img src="{{ file_url(node.field_instructor.entity.field_image.entity.uri.value) }}" alt="{{ node.field_instructor.entity.label }}">
+              {% endif %}
+            </div>
+            
+            <div class="instructor-profile__details">
+              <h4>{{ node.field_instructor.entity.label }}</h4>
+              
+              <span class="instructor-profile__title">
+                {{ node.field_instructor.entity.field_instructor_title.value }}
+              </span>
+              
+              <div class="instructor-profile__bio">
+                {# Use the processed body field to maintain paragraph tags #}
+                {{ node.field_instructor.entity.field_bio.processed|raw }}
+              </div>
+            </div>
+            
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {# Sticky Sidebar #}
+    <aside class="program-detail__sidebar">
+      <div class="registration-card sticky-sidebar">
+        <div class="price-header">
+          <span class="price-main">${{ node.field_price.value }}</span>
+          {% if node.field_member_price.value %}
+            <span class="price-member">member price ${{ node.field_member_price.value }}</span>
+          {% endif %}
+        </div>
+        
+        <dl class="program-specs">
+          <dt>Level</dt><dd>{{ node.field_level.value }}</dd>
+          <dt>Schedule</dt><dd>{{ node.field_schedule.value }}</dd>
+          <dt>Dates</dt><dd>{{ content.field_dates }}</dd>
+          <dt>Sessions</dt><dd>{{ node.field_sessions.value }} classes</dd>
+          <dt>Class size</dt><dd>{{ node.field_class_size.value }} students max</dd>
+          <dt>Location</dt><dd>{{ node.field_location.value }}</dd>
+        </dl>
+
+        <button class="btn btn--primary">Register</button>
+        <button class="btn btn--secondary">Add to wishlist</button>
+      </div>
+    </aside>
+
+  </div>
+</article>

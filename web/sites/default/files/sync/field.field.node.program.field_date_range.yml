@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date_range
+    - node.type.program
+  module:
+    - datetime_range
+id: node.program.field_date_range
+field_name: field_date_range
+entity_type: node
+bundle: program
+label: 'Schedule'
+description: 'Single date: leave end date empty. Multi-day/session program: set an end date.'
+required: true
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: daterange

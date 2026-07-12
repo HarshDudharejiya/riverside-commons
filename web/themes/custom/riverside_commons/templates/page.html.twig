@@ -1,0 +1,16 @@
+{#
+  Top-level page template.
+  site_nav_links / site_footer are built in
+  riverside_commons_preprocess_page() in the .theme file.
+#}
+{% include 'riverside_commons:site-nav' with {
+  links: site_nav_links,
+  donate_url: '/donate',
+  donate_text: 'Donate',
+} only %}
+
+<main id="main-content" class="site-main">
+  {{ page.content }}
+</main>
+
+{% include 'riverside_commons:site-footer' with site_footer only %}

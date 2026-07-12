@@ -1,0 +1,164 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - taxonomy
+    - user
+  config:
+    - field.storage.node.field_category
+    - node.type.program
+    - taxonomy.vocabulary.category
+id: programs
+label: Programs
+module: views
+description: 'Programs listing — renders each result via the Program teaser view mode (program-card SDC), with an exposed category filter.'
+tag: ''
+base_table: node_field_data
+base_field: nid
+display:
+  default:
+    id: default
+    display_title: Master
+    display_plugin: default
+    position: 0
+    display_options:
+      title: Programs
+      fields: {}
+      pager:
+        type: mini
+        options:
+          items_per_page: 9
+          offset: 0
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: teaser
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+      sorts:
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          order: DESC
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          value: '1'
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            program: program
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+        field_category_target_id:
+          id: field_category_target_id
+          table: taxonomy_index
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {}
+          group: 1
+          exposed: true
+          expose:
+            operator_id: ''
+            label: Category
+            description: ''
+            use_operator: false
+            operator: field_category_target_id_op
+            operator_limit_selection: false
+            operator_list: {}
+            identifier: category
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {}
+            group_items: {}
+          reduce_duplicates: false
+          error_message: true
+          vid: category
+          type: select
+          hierarchy: false
+          limit: true
+          vocabulary: category
+          plugin_id: taxonomy_index_tid
+      arguments: {}
+      relationships: {}
+      header: {}
+      footer: {}
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          empty: true
+          content: '<p>No programs are open right now — check back soon.</p>'
+          plugin_id: text_custom
+      display_extenders: {}
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      tags: []
+  page_1:
+    id: page_1
+    display_title: Page
+    display_plugin: page
+    position: 1
+    display_options:
+      display_extenders: {}
+      path: programs
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user.permissions
+      tags: []

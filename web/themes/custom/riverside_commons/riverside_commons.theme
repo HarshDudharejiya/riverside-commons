@@ -1,0 +1,381 @@
+<?php
+
+/**
+ * @file
+ * Preprocess functions for the Riverside Commons theme.
+ *
+ * Field map this file assumes (per the real Program content type):
+ *   body                        - long text w/ summary, "About this class"
+ *   field_subtitle_intro        - long text w/ summary, short intro under title
+ *   field_category              - entity ref (taxonomy: Category), required
+ *   field_image                 - image, required
+ *   field_level                 - list_string, required (restricted list, e.g. "Beginner")
+ *   field_date_range            - daterange, required (canonical schedule)
+ *   field_schedule              - short text, optional human override
+ *                                 (e.g. "Tues & Thurs, 6-8pm") - shown INSTEAD
+ *                                 of the formatted date_range when present
+ *   field_sessions              - integer, optional, number of sessions
+ *   field_class_size            - integer, optional, max class size
+ *   field_location              - short text, optional (e.g. "Studio B")
+ *   field_price_standard        - decimal, optional (empty = Free)
+ *   field_price_member          - decimal, optional
+ *   field_member_price_note     - short text, optional (e.g. "Members save 15%")
+ *   field_instructor_details    - entity ref (content: Instructor), optional
+ *   field_what_you_ll_learn     - string_long (PLAIN, no text format) -
+ *                                 one bullet per line, split in preprocess
+ *   field_what_s_included       - text_long (HAS a text format) - authored
+ *                                 as real HTML <ul> in the WYSIWYG
+ *
+ * NOT used below (flagged as likely dead/duplicate fields - see README
+ * "Questions & flags"): field_price, field_dates.
+ */
+
+use Drupal\node\NodeInterface;
+use Drupal\taxonomy\TermInterface;
+
+/**
+ * Implements hook_preprocess_node() for Program nodes (both view modes).
+ */
+function riverside_commons_preprocess_node(array &$variables) {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $variables['node'];
+
+  if ($node->bundle() !== 'program') {
+    return;
+  }
+
+  $view_mode = $variables['view_mode'];
+  $meta = riverside_program_build_meta($node);
+
+  if ($view_mode === 'teaser') {
+    $variables['card'] = riverside_program_build_card_props($node, $meta);
+    return;
+  }
+
+  if ($view_mode === 'full') {
+    $variables['program'] = [
+      'meta' => $meta['line'],
+      'date_range' => $meta['date_range'],
+      'price_html' => $meta['price_html'],
+      'level' => riverside_program_level_label($node),
+      'class_size' => $node->get('field_class_size')->value ?? '',
+      'location' => $node->get('field_location')->value ?? '',
+      'subtitle' => riverside_program_render_text_field($node, 'field_subtitle_intro'),
+      'what_you_learn' => riverside_program_render_plain_list($node, 'field_what_you_ll_learn'),
+      'whats_included' => riverside_program_render_text_field($node, 'field_what_s_included'),
+      'instructor' => riverside_program_build_instructor($node),
+      'jsonld' => riverside_program_build_jsonld($node, $meta),
+    ];
+    $variables['related_cards'] = riverside_program_related_cards($node);
+  }
+}
+
+/**
+ * Renders a long-text field as safe markup, or NULL if empty.
+ *
+ * Used for the "What you'll learn" / "What's included" fields, which are
+ * authored as bullet-list HTML in the WYSIWYG - Twig should not have to
+ * know that, so we resolve it here.
+ */
+function riverside_program_render_text_field(NodeInterface $node, string $field_name): ?array {
+  if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+    return NULL;
+  }
+  return $node->get($field_name)->view(['label' => 'hidden']);
+}
+
+/**
+ * Splits a PLAIN long-text field (string_long - no text format, so no
+ * HTML list markup can be authored in it) into an array of lines, one
+ * per authored line, for Twig to render as a real <ul>.
+ *
+ * Use this instead of riverside_program_render_text_field() for any
+ * field of type string_long. Use riverside_program_render_text_field()
+ * for text_long / text_with_summary fields, which DO carry a text
+ * format and can contain real <ul><li> markup from the WYSIWYG.
+ */
+function riverside_program_render_plain_list(NodeInterface $node, string $field_name): array {
+  if (!$node->hasField($field_name) || $node->get($field_name)->isEmpty()) {
+    return [];
+  }
+  $raw = $node->get($field_name)->value ?? '';
+  $lines = preg_split('/\r\n|\r|\n/', trim($raw));
+  return array_values(array_filter(array_map('trim', $lines)));
+}
+
+/**
+ * Builds instructor display data from field_instructor_details.
+ *
+ * ASSUMPTION: the Instructor content type has at least a title (name)
+ * and a body (bio). Photo is read from field_image if present on that
+ * content type - adjust the field name below if Instructor uses a
+ * different image field machine name.
+ */
+function riverside_program_build_instructor(NodeInterface $node): ?array {
+  if (!$node->hasField('field_instructor_details') || $node->get('field_instructor_details')->isEmpty()) {
+    return NULL;
+  }
+
+  $instructor = $node->get('field_instructor_details')->entity;
+  if (!$instructor instanceof NodeInterface) {
+    return NULL;
+  }
+
+  $photo_url = '';
+  if ($instructor->hasField('field_image') && !$instructor->get('field_image')->isEmpty()) {
+    $file = $instructor->get('field_image')->entity;
+    if ($file) {
+      $photo_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+    }
+  }
+
+
+  return [
+    'name' => $instructor->label(),
+    'photo_url' => $photo_url,
+    'bio' => $bio,
+    'url' => $instructor->toUrl()->toString(),
+  ];
+}
+
+/**
+ * Resolves the human label for a list_string field value
+ * (e.g. stored 'beginner' -> displayed 'Beginner'), falling back to the
+ * raw value if it's not in the field's allowed_values (shouldn't happen,
+ * but cheaper than a fatal if content and config ever drift).
+ */
+function riverside_program_level_label(NodeInterface $node): string {
+  if ($node->get('field_level')->isEmpty()) {
+    return '';
+  }
+  $item = $node->get('field_level')->first();
+  $definition = $item->getFieldDefinition()->getFieldStorageDefinition();
+  // allowed_values for list_string is a flat ['beginner' => 'Beginner', ...]
+  // map (key => label) - NOT a list of {value, label} objects.
+  $allowed = $definition->getSetting('allowed_values') ?? [];
+  $raw = $item->value;
+  return $allowed[$raw] ?? $raw ?? '';
+}
+function riverside_program_build_card_props(NodeInterface $node, array $meta): array {
+  $image_field = $node->get('field_image');
+  $image_url = '';
+  $image_alt = '';
+  if (!$image_field->isEmpty()) {
+    $file = $image_field->entity;
+    $image_url = $file ? \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri()) : '';
+    $image_alt = $image_field->alt ?? '';
+  }
+
+  $category_label = '';
+  if (!$node->get('field_category')->isEmpty()) {
+    /** @var \Drupal\taxonomy\TermInterface $term */
+    $term = $node->get('field_category')->entity;
+    $category_label = $term instanceof TermInterface ? $term->label() : '';
+  }
+
+  return [
+    'title' => $node->label(),
+    'url' => $node->toUrl()->toString(),
+    'image' => [
+      'url' => $image_url,
+      'alt' => $image_alt,
+      'width' => 400,
+      'height' => 300,
+    ],
+    'category' => $category_label,
+    'meta' => $meta['line'],
+    'level' => riverside_program_level_label($node),
+  ];
+}
+
+/**
+ * Assembles the schedule/price/level meta line and its component parts.
+ */
+function riverside_program_build_meta(NodeInterface $node): array {
+
+  $level = riverside_program_level_label($node);
+
+  $parts = array_filter([$date_range, $price_text, $level]);
+
+  return [
+    'line' => implode(' · ', $parts),
+    'date_range' => $date_range,
+    'price_html' => $price_html,
+  ];
+}
+
+
+/**
+ * Formats price, handling the member-vs-standard case + optional note.
+ */
+function riverside_program_format_price(NodeInterface $node, bool $plain_text = FALSE): string {
+  $standard = $node->get('field_price_standard')->value ?? NULL;
+  if ($standard === NULL || $standard === '') {
+    return $plain_text ? 'Free' : '<span class="price price--free">Free</span>';
+  }
+
+  $standard_fmt = '$' . number_format((float) $standard, 0);
+  $member = $node->hasField('field_price_member') ? $node->get('field_price_member')->value : NULL;
+  $note = $node->hasField('field_member_price_note') ? $node->get('field_member_price_note')->value : NULL;
+
+  if ($member === NULL || $member === '') {
+    return $plain_text ? $standard_fmt : '<span class="price">' . $standard_fmt . '</span>';
+  }
+
+  $member_fmt = '$' . number_format((float) $member, 0);
+
+  if ($plain_text) {
+    return $standard_fmt . ' (' . $member_fmt . ' members)';
+  }
+
+  $note_html = $note ? ' <span class="price__note">' . htmlspecialchars($note) . '</span>' : '';
+  return '<span class="price">' . $standard_fmt . '</span> '
+    . '<span class="price price--member">(' . $member_fmt . ' members)</span>' . $note_html;
+}
+
+/**
+ * Builds the JSON-LD payload for the detail page.
+ */
+function riverside_program_build_jsonld(NodeInterface $node, array $meta): string {
+
+  $type = $is_single_date ? 'Event' : 'Course';
+
+  $data = [
+    '@context' => 'https://schema.org',
+    '@type' => $type,
+    'name' => $node->label(),
+    'url' => $node->toUrl()->setAbsolute()->toString(),
+  ];
+
+
+  $breadcrumb = [
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+      ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => \Drupal::request()->getSchemeAndHttpHost()],
+      ['@type' => 'ListItem', 'position' => 2, 'name' => 'Programs', 'item' => \Drupal::request()->getSchemeAndHttpHost() . '/programs'],
+      ['@type' => 'ListItem', 'position' => 3, 'name' => $node->label()],
+    ],
+  ];
+
+  return json_encode([$data, $breadcrumb], JSON_UNESCAPED_SLASHES);
+}
+
+/**
+ * Related programs: same category, excluding the current node.
+ */
+function riverside_program_related_cards(NodeInterface $node): array {
+  if ($node->get('field_category')->isEmpty()) {
+    return [];
+  }
+  $term_id = $node->get('field_category')->target_id;
+
+  $query = \Drupal::entityQuery('node')
+    ->condition('type', 'program')
+    ->condition('field_category', $term_id)
+    ->condition('nid', $node->id(), '<>')
+    ->accessCheck(TRUE)
+    ->range(0, 3);
+  $nids = $query->execute();
+
+  if (!$nids) {
+    return [];
+  }
+
+  $nodes = \Drupal\node\Entity\Node::loadMultiple($nids);
+  $cards = [];
+  foreach ($nodes as $related) {
+    $meta = riverside_program_build_meta($related);
+    $cards[] = riverside_program_build_card_props($related, $meta);
+  }
+  return $cards;
+}
+
+/**
+ * Implements hook_preprocess_page().
+ */
+function riverside_commons_preprocess_page(array &$variables) {
+  $menu_tree = \Drupal::menuTree();
+  $params = $menu_tree->getCurrentRouteMenuTreeParameters('main');
+  $tree = $menu_tree->load('main', $params);
+  $tree = $menu_tree->transform($tree, [
+    ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+    ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+  ]);
+
+  $links = [];
+  foreach ($tree as $item) {
+    if ($item->access->isAllowed()) {
+      $links[] = [
+        'text' => $item->link->getTitle(),
+        'url' => $item->link->getUrlObject()->toString(),
+      ];
+    }
+  }
+  $variables['site_nav_links'] = $links;
+
+  $variables['site_footer'] = [
+    'org' => [
+      'name' => 'Riverside Commons',
+      'address_lines' => ['14 Mill Street', 'Open Tue–Sun, 10am–6pm'],
+    ],
+    'columns' => [
+      [
+        'heading' => 'Programs',
+        'links' => [
+          ['text' => 'Studio Classes', 'url' => '/programs'],
+          ['text' => 'Open Studio Access', 'url' => '/programs'],
+          ['text' => 'Exhibitions', 'url' => '/programs'],
+          ['text' => 'Youth Workshops', 'url' => '/programs'],
+        ],
+      ],
+      [
+        'heading' => 'About',
+        'links' => [
+          ['text' => 'Our Story', 'url' => '/about'],
+          ['text' => 'Staff & Artists', 'url' => '/about'],
+          ['text' => 'Visit', 'url' => '/about'],
+          ['text' => 'Contact', 'url' => '/contact'],
+        ],
+      ],
+      [
+        'heading' => 'Get Involved',
+        'links' => [
+          ['text' => 'Membership', 'url' => '/membership'],
+          ['text' => 'Donate', 'url' => '/donate'],
+          ['text' => 'Volunteer', 'url' => '/volunteer'],
+        ],
+      ],
+    ],
+    'social_links' => [
+      ['text' => 'Instagram', 'url' => '#'],
+      ['text' => 'Facebook', 'url' => '#'],
+      ['text' => 'Newsletter', 'url' => '/newsletter'],
+    ],
+    'copyright' => '© ' . date('Y') . ' Riverside Commons',
+  ];
+}
+
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function riverside_commons_preprocess_node__program(&$variables) {
+  $node = $variables['node'];
+  
+  if ($variables['view_mode'] === 'teaser') {
+    $meta_parts = [];
+    
+    if (!$node->get('field_sessions')->isEmpty()) {
+      $meta_parts[] = $node->get('field_sessions')->value . ' weeks';
+    }
+    if (!$node->get('field_schedule')->isEmpty()) {
+      $meta_parts[] = $node->get('field_schedule')->value;
+    }
+    if (!$node->get('field_price')->isEmpty()) {
+      $meta_parts[] = '$' . number_format($node->get('field_price')->value, 0);
+    }
+    
+    $variables['card_meta_text'] = implode(' • ', $meta_parts);
+  }
+}

@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  config: [field.storage.node.field_sessions, node.type.program]
+id: node.program.field_sessions
+field_name: field_sessions
+entity_type: node
+bundle: program
+label: Sessions
+description: 'Number of sessions in the program. Optional.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings: {}
+field_type: integer

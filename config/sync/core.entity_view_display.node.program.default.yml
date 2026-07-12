@@ -1,0 +1,159 @@
+uuid: babe52ae-a1dd-4639-91e7-49a6bcf3bb8c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.program.field_body
+    - field.field.node.program.field_category
+    - field.field.node.program.field_class_size
+    - field.field.node.program.field_dates
+    - field.field.node.program.field_image
+    - field.field.node.program.field_included
+    - field.field.node.program.field_instructor
+    - field.field.node.program.field_learn
+    - field.field.node.program.field_level
+    - field.field.node.program.field_location
+    - field.field.node.program.field_member_price
+    - field.field.node.program.field_price
+    - field.field.node.program.field_schedule
+    - field.field.node.program.field_sessions
+    - field.field.node.program.field_subtitle
+    - image.style.program_detail_hero
+    - node.type.program
+  module:
+    - datetime_range
+    - image
+    - options
+    - text
+    - user
+id: node.program.default
+targetEntityType: node
+bundle: program
+mode: default
+content:
+  field_body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 14
+    region: content
+  field_class_size:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_dates:
+    type: daterange_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+      from_to: both
+      separator: '-'
+    third_party_settings: {  }
+    weight: 7
+    region: content
+  field_image:
+    type: image
+    label: hidden
+    settings:
+      image_link: ''
+      image_style: program_detail_hero
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_included:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 12
+    region: content
+  field_instructor:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 13
+    region: content
+  field_learn:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_level:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_location:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_member_price:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_price:
+    type: number_decimal
+    label: above
+    settings:
+      thousand_separator: ''
+      decimal_separator: .
+      scale: 2
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_schedule:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_sessions:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_subtitle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+      link_rel: canonical
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden:
+  field_category: true
+  links: true

@@ -1,0 +1,75 @@
+.program-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.program-card:hover, 
+.program-card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.08);
+}
+
+.program-card__image {
+  position: relative;
+  z-index: 1;
+}
+
+.program-card__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.program-card__content {
+  padding: 1.5rem;
+}
+
+.program-card__badge {
+  display: inline-block;
+  background-color: #fdf2ef;
+  color: #c44536;
+  padding: 0.25rem 0.6rem;
+  margin: 0 0 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 4px;
+}
+
+.program-card__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.program-card__title a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.program-card__title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.program-card__title a:focus-visible {
+  outline: 3px solid #1a1a1a;
+  outline-offset: 2px;
+}
+
+.program-card__meta {
+  margin: 0;
+  color: #555;
+  font-size: 0.875rem;
+}

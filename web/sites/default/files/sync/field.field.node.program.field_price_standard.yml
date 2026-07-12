@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_price_standard
+    - node.type.program
+id: node.program.field_price_standard
+field_name: field_price_standard
+entity_type: node
+bundle: program
+label: 'Standard price'
+description: 'Leave empty for free programs.'
+required: false
+translatable: false
+default_value: []
+default_value_callback: ''
+settings:
+  min: 0
+  max: null
+  prefix: '$'
+  suffix: ''
+field_type: decimal

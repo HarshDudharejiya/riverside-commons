@@ -1,0 +1,18 @@
+name: Program Card
+description: 'Reusable card for program listings and related content.'
+props:
+  type: object
+  required:
+    - title
+    - url
+  properties:
+    image:
+      type: string
+    category:
+      type: string
+    title:
+      type: string
+    meta_text:
+      type: string
+    url:
+      type: string

@@ -1,0 +1,5 @@
+name: Riverside Program
+type: module
+description: 'Optional: computed meta-string service for Program nodes, reusable by preprocess and (if attempted) a JSON:API/REST normalizer.'
+package: Custom
+core_version_requirement: ^10 || ^11

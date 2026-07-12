@@ -1,0 +1,21 @@
+uuid: 7e8d38ca-240f-41db-a814-a8ae4cb0df52
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_level
+    - node.type.program
+  module:
+    - options
+id: node.program.field_level
+field_name: field_level
+entity_type: node
+bundle: program
+label: Level
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

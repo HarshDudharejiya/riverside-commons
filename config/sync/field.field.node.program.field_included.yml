@@ -1,0 +1,22 @@
+uuid: 0cd86bcf-dd7d-450c-92d5-975977fd3b06
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_included
+    - node.type.program
+  module:
+    - text
+id: node.program.field_included
+field_name: field_included
+entity_type: node
+bundle: program
+label: Included
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

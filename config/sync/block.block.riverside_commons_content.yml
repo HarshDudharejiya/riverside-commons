@@ -1,0 +1,22 @@
+uuid: 63d56441-8e67-4911-b2ec-5af900efde2c
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - riverside_commons
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: riverside_commons_content
+theme: riverside_commons
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

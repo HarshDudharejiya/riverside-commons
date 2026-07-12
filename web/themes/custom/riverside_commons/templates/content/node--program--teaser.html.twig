@@ -1,0 +1,10 @@
+{{ attach_library('riverside_commons/global') }}
+
+{# If your folder is named program_card, this must use an underscore: #}
+{% include 'riverside_commons:program_card' with {
+  image: content.field_image,
+  category: node.field_category.entity.name.value,
+  title: node.title.value, 
+  meta_text: card_meta_text,
+  url: url
+} only %}

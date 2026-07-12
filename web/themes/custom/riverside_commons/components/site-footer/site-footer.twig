@@ -1,0 +1,32 @@
+<footer class="site-footer">
+  <div class="site-footer__grid">
+    <div class="site-footer__col site-footer__col--org">
+      <p class="site-footer__brand">{{ org.name }}</p>
+      {% for line in org.address_lines %}
+        <p class="site-footer__address-line">{{ line }}</p>
+      {% endfor %}
+    </div>
+
+    {% for column in columns %}
+      <div class="site-footer__col">
+        <h2 class="site-footer__heading">{{ column.heading }}</h2>
+        <ul class="site-footer__links">
+          {% for link in column.links %}
+            <li><a href="{{ link.url }}">{{ link.text }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="site-footer__bottom">
+    <p class="site-footer__copyright">{{ copyright }}</p>
+    {% if social_links %}
+      <ul class="site-footer__social" aria-label="Social media links">
+        {% for link in social_links %}
+          <li><a href="{{ link.url }}">{{ link.text }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</footer>

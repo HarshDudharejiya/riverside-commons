@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.program.field_image
+    - node.type.program
+  module:
+    - image
+id: node.program.teaser
+targetEntityType: node
+bundle: program
+mode: teaser
+content:
+  field_image:
+    type: image
+    label: hidden
+    settings:
+      image_style: program_card_thumb
+      image_link: ''
+    third_party_settings: {}
+    weight: 0
+    region: content
+
+# All other fields (title, category badge, date/price/level meta line)
+# are assembled by riverside_preprocess_node() into the `card` variable
+# and printed by the program-card SDC — not by generic field formatters.
+# field_image is left as a normal field here only so its render array
+# is available if you want to swap to it later; the SDC currently uses
+# card.image (a plain URL/alt array) built in preprocess instead.
+hidden:
+  body: true
+  field_category: true
+  field_date_range: true
+  field_level: true
+  field_price_member: true
+  field_price_standard: true
+  langcode: true
+  links: true

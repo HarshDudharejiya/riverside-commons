@@ -1,0 +1,23 @@
+uuid: 2ca2a551-7b7b-4eef-9623-614312a0f53d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_sessions
+    - node.type.program
+id: node.program.field_sessions
+field_name: field_sessions
+entity_type: node
+bundle: program
+label: Sessions
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

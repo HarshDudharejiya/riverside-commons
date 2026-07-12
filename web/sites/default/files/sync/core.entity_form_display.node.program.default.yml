@@ -1,0 +1,95 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.program.body
+    - field.field.node.program.field_category
+    - field.field.node.program.field_date_range
+    - field.field.node.program.field_image
+    - field.field.node.program.field_level
+    - field.field.node.program.field_price_member
+    - field.field.node.program.field_price_standard
+    - node.type.program
+  module:
+    - datetime_range
+    - image
+    - options
+    - path
+    - text
+id: node.program.default
+targetEntityType: node
+bundle: program
+mode: default
+content:
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {}
+  field_image:
+    type: image_image
+    weight: 1
+    region: content
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {}
+  field_category:
+    type: options_select
+    weight: 2
+    region: content
+    settings: {}
+    third_party_settings: {}
+  field_date_range:
+    type: daterange_default
+    weight: 3
+    region: content
+    settings: {}
+    third_party_settings: {}
+  field_level:
+    type: options_select
+    weight: 4
+    region: content
+    settings: {}
+    third_party_settings: {}
+  field_price_standard:
+    type: number
+    weight: 5
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {}
+  field_price_member:
+    type: number
+    weight: 6
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {}
+  body:
+    type: text_textarea_with_summary
+    weight: 7
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {}
+  status:
+    type: boolean_checkbox
+    weight: 8
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {}
+hidden:
+  created: true
+  langcode: true
+  path: true
+  promote: true
+  sticky: true
+  uid: true

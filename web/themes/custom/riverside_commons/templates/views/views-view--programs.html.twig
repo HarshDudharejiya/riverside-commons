@@ -1,0 +1,42 @@
+<div class="programs-listing-page">
+  
+  {# Static Page Header #}
+  <header class="programs-listing-page__header">
+    <h1>Programs</h1>
+    <p class="programs-listing-page__subtitle">Classes, open studios, exhibitions, and workshops — something for every age and skill level.</p>
+  </header>
+
+  {# Pill-shaped Exposed Filters #}
+  {% if exposed %}
+    <div class="programs-listing-page__filters">
+      {{ exposed }}
+    </div>
+  {% endif %}
+
+  {# "Showing X of Y" Summary #}
+  {% if header %}
+    <div class="programs-listing-page__summary">
+      {{ header }}
+    </div>
+  {% endif %}
+
+  {# The 3-Column Grid Output #}
+  <div class="programs-listing-page__content">
+    {{ rows }}
+  </div>
+
+  {# Custom Pager #}
+  {% if pager %}
+    <div class="programs-listing-page__pager">
+      {{ pager }}
+    </div>
+  {% endif %}
+
+  {# Bottom CTA Block #}
+  <div class="programs-listing-page__cta">
+    <h2>Not sure where to start?</h2>
+    <p>Become a member for open-studio access and member pricing on every class.</p>
+    <a href="/membership" class="btn btn--primary" style="width: auto;">Become a Member</a>
+  </div>
+
+</div>
